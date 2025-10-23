@@ -1,0 +1,7 @@
+.env
+restore_code/.env
+
+node_modules
+
+restore_code/node_modules
+
