@@ -1,0 +1,72 @@
+service: campRider-app-apiV2 # Choose a name for your service
+useDotenv: true # Enable loading environment variables from a .env file
+
+# 1. ESBUILD CONFLICT FIX: Disable the built-in Serverless v4 builder
+build:
+  esbuild: false
+
+plugins:
+  # Use the external, more reliable plugin for bundling
+  - serverless-esbuild
+
+provider:
+  name: aws
+  runtime: nodejs20.x            # Use a modern Node.js runtime
+  region: us-east-1              # Change to your preferred AWS region
+  # Set memory and timeout limits
+  memorySize: 256
+  timeout: 10                    # 10 seconds timeout
+  environment:
+    # Environment variables pulled securely from your local .env file
+    MONGO_URI: ${env:MONGO_URI}
+    EMAIL_USER: ${env:EMAIL_USER}
+    EMAIL_PASS: ${env:EMAIL_PASS}
+    GOOGLE_CLIENT_ID: ${env:GOOGLE_CLIENT_ID}
+    GOOGLE_CLIENT_SECRET: ${env:GOOGLE_CLIENT_SECRET}
+    CLIENT_URL: ${env:CLIENT_URL}
+    JWT_SECRET: ${env:JWT_SECRET}
+
+package:
+  # Enable packaging each function individually (good practice)
+  individually: true
+  # 2. PACKAGING FIX: Tell the native packager to exclude node_modules.
+  # ESBuild will create the final, small artifact.
+  patterns:
+    - 'node_modules'
+    - 'node_modules/**'         # Exclude all dependencies (they will be bundled)
+    - '!test/**'
+    - 'package.json'
+    - '!tests/**'
+    - '.env'                    # Ensure you don't package the .env file
+    - 'handler.js'               # Include the entry file
+    - 'app.js'                   # Include the main app file
+    - 'routes/**'                # Include all local source folders
+    - 'src/**'                   # Include all local source folders
+    - '!.git/**'
+
+functions:
+  api:
+    # Handler points to the entry file and exported function
+    handler: handler.handler
+    events:
+      # 3. API GATEWAY FIX: Use a catch-all method for the base path
+      - http:
+          path: /
+          method: any
+          cors: true
+      # 4. API GATEWAY FIX: Use a catch-all method for all sub-paths (Express routes)
+      - http:
+          path: /{proxy+}
+          method: any
+          cors: true
+
+custom:
+  # 5. ESBUILD BUNDLING CONFIGURATION
+  esbuild:
+    bundle: true         # CRITICAL: Forces bundling of all code and dependencies
+    minify: true         # Optional: Reduces the final file size
+    target: 'node20'     # Match the runtime
+    platform: 'node'
+    # Exclude modules provided by AWS Lambda (only include what MUST be in the bundle)
+    external:
+      - 'aws-sdk'
