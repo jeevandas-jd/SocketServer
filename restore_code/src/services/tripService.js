@@ -4,14 +4,16 @@ const Socket = require("../models/socketModel");
 // Define a timeout period (10 seconds)
 const TRIP_OFFER_TIMEOUT = 10000; 
 
-async function offerTripToPilotsSequentially(trip, pilots) {
+async function offerTripToPilotsSequentially(trip, pilots, ioInstance) {
   // 1. Get the global Socket.IO instance
-  const io = getIO(); 
+  const io = ioInstance;
 
   for (const pilot of pilots) {
     // 2. Find the pilot's active socketId from the database
-    const socketDoc = await Socket.findOne({ pilotId: pilot._id });
-    const socketId =await Socket.findOne({ userId: pilot._id }).then(doc => doc ? doc.socketId : null);
+    console.log(`Looking up socket for pilot ${pilot}`);
+    const socketDoc = await Socket.findOne({ pilotId: pilot});
+    console.log(`Socket document for pilot ${pilot._id}:`, socketDoc);
+    const socketId =await Socket.findOne({ userId: pilot}).then(doc => doc ? doc.socketId : null);
     
     console.log(`Offering trip ${trip.tripId} to pilot ${pilot._id} socket id is ${socketId}`);
 
@@ -37,7 +39,7 @@ async function offerTripToPilotsSequentially(trip, pilots) {
         // Data verification: Ensure this response matches the current trip and pilot
         if (
           data.tripId === trip.tripId &&
-          data.pilotId === pilot._id.toString() 
+          data.pilotId === pilot
         ) {
           console.log(`Received response from pilot ${pilot._id} for trip ${trip.tripId}: ${data.status}`);
           
@@ -75,8 +77,8 @@ async function offerTripToPilotsSequentially(trip, pilots) {
     });
 
     if (accepted) {
-      console.log(`Pilot ${pilot._id} accepted trip ${trip.tripId}`);
-      return pilot._id;
+      console.log(`Pilot ${pilot} accepted trip ${trip.tripId}`);
+      return pilot;
     }
   }
 

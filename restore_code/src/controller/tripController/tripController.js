@@ -3,7 +3,7 @@ const TripInfo = require("../../models/tripInfo");
 const EndUser = require("../../models/authentication/EndUser");
 const Pilot = require("../../models/authentication/PilotUser");
 const { offerTripToPilotsSequentially } = require("../../services/tripService");
-
+const axios = require("axios");
 exports.createTripRequest = async (req, res) => {
   try {
     const { pickupLocation, dropLocation, fare } = req.body;
@@ -31,7 +31,15 @@ exports.createTripRequest = async (req, res) => {
     if (!pilots.length)
       return res.status(503).json({ message: "No live pilots available" });
 
-    const acceptedPilotId = await offerTripToPilotsSequentially(trip, pilots);
+    //const acceptedPilotId = await offerTripToPilotsSequentially(trip, pilots);
+    const acceptedPilotId = await axios.post("http://localhost:4000/offer-trip", {
+      trip,
+      pilots: pilots.map(p => p._id)
+    }).then(response => response.data.acceptedPilot)
+    .catch(err => {
+      console.error("Error offering trip to pilots:", err);
+      return null;
+    });
     //need to knock all isLive pilots sequentially until one accepts the trip ,how to implement this logic? I guess using sockets
     
     if (!acceptedPilotId) {

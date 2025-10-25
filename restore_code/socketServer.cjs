@@ -1,5 +1,6 @@
 // socketServer.js
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -18,17 +19,31 @@ mongoose.connection.once("open", () =>
   console.log("✅ MongoDB connected to Socket Server")
 );
 
-const io = new Server(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] },
-});
+const initIOinstance =(server)=>{
+
+  const io = new Server(server, {
+    cors: { origin: "*", methods: ["GET", "POST"] },
+  });
+  return io;  
+
+};
+
+const io = initIOinstance(server);
+// const io = new Server(server, {
+//   cors: { origin: "*", methods: ["GET", "POST"] },
+// });
 
 io.on("connection", (socket) => {
   console.log("🟢 Pilot connected:", socket.id);
+  
 
   socket.on("pilot-online", async ({ pilotId }) => {
     console.log("Pilot online:", pilotId);
     await Socket.deleteMany({ userId: pilotId });
-    await Socket.create({ userId: pilotId, socketId: socket.id });
+    const newSocket =new Socket({ userId: pilotId, socketId: socket.id });
+    newSocket.save();
+    console.log("Socket entry created for pilot:", pilotId);
+    //await Socket.create({ userId: pilotId, socketId: socket.id });
     await Pilot.findByIdAndUpdate(pilotId, { isLive: true });
   });
 
@@ -54,8 +69,10 @@ app.use(express.json());
 app.post("/offer-trip", async (req, res) => {
   try {
     const { trip, pilots } = req.body;
+    console.log(`Received trip offer request for trip ${trip.tripId} to pilots:`, pilots);
     const { offerTripToPilotsSequentially } = require("./src/services/tripService");
-    const pilotId = await offerTripToPilotsSequentially(trip, pilots);
+    const pilotId = await offerTripToPilotsSequentially(trip, pilots,io);
+    console.log(`Trip ${trip.tripId} accepted by pilot:`, pilotId);
     res.json({ acceptedPilot: pilotId });
   } catch (err) {
     console.error(err);
