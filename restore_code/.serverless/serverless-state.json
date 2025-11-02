@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "campRider-app-apiV2",
+    "service": "campRider-app-api",
     "serviceObject": {
-      "name": "campRider-app-apiV2"
+      "name": "campRider-app-api"
     },
     "provider": {
       "name": "aws",
@@ -16,7 +16,7 @@
         "EMAIL_PASS": "gvfi kyxn eecn jvmq",
         "GOOGLE_CLIENT_ID": "253926630063-pgus6lrl5vvq78ce0eikhuu925s5eedu.apps.googleusercontent.com",
         "GOOGLE_CLIENT_SECRET": "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",
-        "CLIENT_URL": "http://localhost:3000",
+        "CLIENT_URL": "https://u61caoh9m2.execute-api.us-east-1.amazonaws.com/dev/",
         "JWT_SECRET": "lkjgdfgkhoru34ouo2985729572wekrhkjhskjfhi4y2452u52ljlsfjlsow4uofjsllj4oi23u2lklk"
       },
       "stage": "dev",
@@ -28,7 +28,7 @@
           "ApiLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/campRider-app-apiV2-dev-api"
+              "LogGroupName": "/aws/lambda/campRider-app-api-dev-api"
             }
           },
           "IamRoleLambdaExecution": {
@@ -56,7 +56,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "campRider-app-apiV2",
+                        "campRider-app-api",
                         "dev",
                         "lambda"
                       ]
@@ -74,7 +74,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/campRider-app-apiV2-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/campRider-app-api-dev*:*"
                           }
                         ]
                       },
@@ -85,7 +85,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/campRider-app-apiV2-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/campRider-app-api-dev*:*:*"
                           }
                         ]
                       }
@@ -98,7 +98,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "campRider-app-apiV2",
+                    "campRider-app-api",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -114,11 +114,11 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-d7473727-684b",
-                "S3Key": "serverless/campRider-app-apiV2/dev/1761322418757-2025-10-24T16:13:38.757Z/api.zip"
+                "S3Key": "serverless/campRider-app-api/dev/1761421467930-2025-10-25T19:44:27.930Z/api.zip"
               },
               "Handler": "handler.handler",
               "Runtime": "nodejs20.x",
-              "FunctionName": "campRider-app-apiV2-dev-api",
+              "FunctionName": "campRider-app-api-dev-api",
               "MemorySize": 256,
               "Timeout": 10,
               "Environment": {
@@ -128,7 +128,7 @@
                   "EMAIL_PASS": "gvfi kyxn eecn jvmq",
                   "GOOGLE_CLIENT_ID": "253926630063-pgus6lrl5vvq78ce0eikhuu925s5eedu.apps.googleusercontent.com",
                   "GOOGLE_CLIENT_SECRET": "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",
-                  "CLIENT_URL": "http://localhost:3000",
+                  "CLIENT_URL": "https://u61caoh9m2.execute-api.us-east-1.amazonaws.com/dev/",
                   "JWT_SECRET": "lkjgdfgkhoru34ouo2985729572wekrhkjhskjfhi4y2452u52ljlsfjlsow4uofjsllj4oi23u2lklk"
                 }
               },
@@ -143,20 +143,20 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersion8Aju6oWqGObCLL7ecsMTa5xynm1niCzfZpcaJMAbM": {
+          "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "j5KvDbIAotSi+xbpFOISBJvgs7G7qDOhMQs8flrySmo="
+              "CodeSha256": "+h0YLzu6bEraHwTmukJUh/yMD2pNJr2JOjHh188EGqY="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-campRider-app-apiV2",
+              "Name": "dev-campRider-app-api",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -368,7 +368,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1761322371806": {
+          "ApiGatewayDeployment1761421436375": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -425,16 +425,16 @@
           "ServerlessDeploymentBucketName": {
             "Value": "serverless-framework-deployments-us-east-1-d7473727-684b",
             "Export": {
-              "Name": "sls-campRider-app-apiV2-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-campRider-app-api-dev-ServerlessDeploymentBucketName"
             }
           },
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersion8Aju6oWqGObCLL7ecsMTa5xynm1niCzfZpcaJMAbM"
+              "Ref": "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro"
             },
             "Export": {
-              "Name": "sls-campRider-app-apiV2-dev-ApiLambdaFunctionQualifiedArn"
+              "Name": "sls-campRider-app-api-dev-ApiLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -460,7 +460,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-campRider-app-apiV2-dev-ServiceEndpoint"
+              "Name": "sls-campRider-app-api-dev-ServiceEndpoint"
             }
           }
         }
@@ -535,7 +535,7 @@
             }
           }
         ],
-        "name": "campRider-app-apiV2-dev-api",
+        "name": "campRider-app-api-dev-api",
         "package": {
           "artifact": ".serverless/api.zip"
         },
@@ -543,13 +543,13 @@
         "timeout": 10,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersion8Aju6oWqGObCLL7ecsMTa5xynm1niCzfZpcaJMAbM"
+        "versionLogicalId": "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless",
     "initialServerlessConfig": {
-      "service": "campRider-app-apiV2",
+      "service": "campRider-app-api",
       "useDotenv": true,
       "build": {
         "esbuild": false
@@ -575,7 +575,7 @@
           "src/**",
           "!.git/**"
         ],
-        "artifactsS3KeyDirname": "serverless/campRider-app-apiV2/dev/code-artifacts",
+        "artifactsS3KeyDirname": "serverless/campRider-app-api/dev/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-us-east-1-d7473727-684b"
       },
       "functions": {
@@ -594,7 +594,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/campRider-app-apiV2/dev/1761322418757-2025-10-24T16:13:38.757Z",
+    "artifactDirectoryName": "serverless/campRider-app-api/dev/1761421467930-2025-10-25T19:44:27.930Z",
     "artifact": ""
   }
 }

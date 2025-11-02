@@ -1,4 +1,4 @@
-service: campRider-app-apiV2 # Choose a name for your service
+service: campRider-app-api # Choose a name for your service
 useDotenv: true # Enable loading environment variables from a .env file
 
 # 1. ESBUILD CONFLICT FIX: Disable the built-in Serverless v4 builder
