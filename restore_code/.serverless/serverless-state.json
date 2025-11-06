@@ -114,7 +114,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-d7473727-684b",
-                "S3Key": "serverless/campRider-app-api/dev/1761421467930-2025-10-25T19:44:27.930Z/api.zip"
+                "S3Key": "serverless/campRider-app-api/dev/1762467738941-2025-11-06T22:22:18.941Z/api.zip"
               },
               "Handler": "handler.handler",
               "Runtime": "nodejs20.x",
@@ -143,14 +143,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro": {
+          "ApiLambdaVersionXHHLdvMMs2WX3dO30PULswa6SqN0bR17SR57iBOCq0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "+h0YLzu6bEraHwTmukJUh/yMD2pNJr2JOjHh188EGqY="
+              "CodeSha256": "DTbq4RYCt7SVD6Hn+v3L4aCWs85BysnJrWCEbG6gr+0="
             }
           },
           "ApiGatewayRestApi": {
@@ -368,7 +368,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1761421436375": {
+          "ApiGatewayDeployment1762467705133": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -431,7 +431,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro"
+              "Ref": "ApiLambdaVersionXHHLdvMMs2WX3dO30PULswa6SqN0bR17SR57iBOCq0"
             },
             "Export": {
               "Name": "sls-campRider-app-api-dev-ApiLambdaFunctionQualifiedArn"
@@ -543,7 +543,7 @@
         "timeout": 10,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionHo0d0D4t8iQIIbjUWHFpHk729YWHdJmpnM0X7ejxmro"
+        "versionLogicalId": "ApiLambdaVersionXHHLdvMMs2WX3dO30PULswa6SqN0bR17SR57iBOCq0"
       }
     },
     "configValidationMode": "warn",
@@ -594,7 +594,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/campRider-app-api/dev/1761421467930-2025-10-25T19:44:27.930Z",
+    "artifactDirectoryName": "serverless/campRider-app-api/dev/1762467738941-2025-11-06T22:22:18.941Z",
     "artifact": ""
   }
 }
