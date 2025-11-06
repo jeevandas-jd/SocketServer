@@ -32,7 +32,7 @@ exports.createTripRequest = async (req, res) => {
       return res.status(503).json({ message: "No live pilots available" });
 
     //const acceptedPilotId = await offerTripToPilotsSequentially(trip, pilots);
-    const acceptedPilotId = await axios.post("http://ec2-34-201-148-183.compute-1.amazonaws.com:4000/offer-trip", {
+    const acceptedPilotId = await axios.post("http://localhost:4000/offer-trip", {
       trip,
       pilots: pilots.map(p => p._id)
     }).then(response => response.data.acceptedPilot)

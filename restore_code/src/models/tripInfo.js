@@ -12,7 +12,7 @@ const tripInfoSchema = new mongoose.Schema({
     dropLocation: { type: String, required: true },
     passengerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     pilotId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-
+    createdAt: { type: Date, default: Date.now },
     status: { type: String, enum: ['requested', 'accepted', 'in_progress', 'completed', 'cancelled'], default: 'requested' },
     fare: { type: Number, required: true },
     requestedAt: { type: Date, default: Date.now },
