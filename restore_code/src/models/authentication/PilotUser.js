@@ -16,7 +16,7 @@ const pilotSchema = new mongoose.Schema({
   isLive: { type: Boolean, default: false, required: true },
 
   ratingAverage: { type: Number, default: 0 },
-  totalRatings: { type: Number, default: 0 },
+  totalRatings: { type: Number, default: 1 },
   onBench: { type: Boolean, default: true },
 });
 
